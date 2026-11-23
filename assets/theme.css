@@ -1,0 +1,80 @@
+@font-face {
+  font-family: Study Serif;
+  src: url("./fonts/study-serif.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 650;
+  font-display: swap;
+}
+@font-face {
+  font-family: Study Sans;
+  src: url("./fonts/study-sans.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --paper: #f8f5ed;
+  --surface: #fffdf7;
+  --ink: #202721;
+  --muted: #5b655b;
+  --line: #d8dacd;
+  --fern: #315849;
+  --moss: #dce7d9;
+  --rose: #eadbd6;
+  --lilac: #e5dfea;
+  --error: #9b3e41;
+  --display: "Study Serif", "Noto Serif CJK SC", "Songti SC", SimSun, Georgia, serif;
+  --body: "Study Sans", system-ui, "Microsoft YaHei", "PingFang SC", sans-serif;
+  font: 16px/1.65 var(--body);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+button,input,select,textarea { font: inherit; }
+button, a, select { touch-action: manipulation; }
+button { cursor: pointer; color: inherit; }
+button:disabled { cursor: default; opacity: .65; }
+a { color: inherit; text-underline-offset: .25em; }
+a:hover { color: var(--fern); }
+:is(a,button,input,textarea,select,summary,[tabindex="0"]):focus-visible { outline: 2px solid var(--fern); outline-offset: 4px; }
+h1,h2,h3,p,figure { margin: 0; }
+h1,h2 { font-family: var(--display); font-weight: 650; line-height: 1.24; }
+h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus { outline: none; }
+h1 { font-size: clamp(2.7rem, 6.2vw, 6.1rem); letter-spacing: -.06em; }
+h2 { font-size: clamp(1.7rem, 3.25vw, 3.3rem); letter-spacing: -.045em; }
+.shell { width: min(1330px, 100% - 96px); margin-inline: auto; }
+.skip { position: fixed; z-index: 40; top: -7rem; left: 1rem; background: var(--surface); padding: .55rem .9rem; }
+.skip:focus { top: 1rem; }
+.ui-icon { display: inline-block; vertical-align: middle; flex: none; }
+.site-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 82px; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 700; }
+.brand-mark { width: 36px; height: 36px; display: grid; place-items: center; font: 600 29px/1 Georgia,serif; border-radius: 50%; background: var(--moss); color: var(--fern); }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 25px; }
+.site-nav a { text-decoration: none; white-space: nowrap; }
+.site-nav a[aria-current="page"],.site-nav a:hover { text-decoration: underline; }
+.button,.study-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border-radius: 5px; border: 1px solid transparent; font-weight: 650; text-decoration: none; background: transparent; transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
+.button.primary,.study-button.primary,button.primary { color: #fffdf6; background: var(--fern); border-color: var(--fern); }
+.button.primary:hover,.study-button.primary:hover,button.primary:hover { background: #284537; color: #fffdf6; }
+.button.outline,.study-button { border-color: var(--line); }
+.button.outline:hover,.study-button:hover { background: var(--moss); border-color: var(--fern); }
+.text-button { background: none; border: 0; padding: 5px 0; text-decoration: underline; text-underline-offset: .24em; }
+.muted { color: var(--muted); }
+.site-foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 64px; padding-block: 24px 36px; border-top: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 850px) {
+  .shell { width: calc(100% - 40px); }
+  .site-head { min-height: 69px; }
+  .site-nav { gap: 4px 14px; }
+}
+@media (max-width: 540px) {
+  .shell { width: calc(100% - 30px); }
+  .site-head { align-items: start; flex-direction: column; gap: 7px; padding-block: 10px; }
+  .site-nav { font-size: .94rem; }
+  .site-nav .button { min-height: 32px; padding: 3px 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+[data-motion="reduced"],[data-motion="reduced"] *,[data-motion="reduced"] *::before,[data-motion="reduced"] *::after {
+  scroll-behavior: auto !important; transition: none !important; animation: none !important;
+}
