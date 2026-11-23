@@ -2,6 +2,8 @@
 
 [简体中文](README.md) · **English**
 
+[**Open the live demo**](https://attarlluo.github.io/you-zhe-tiao-jian/) to try an experiment, explore the resource map or start an exercise in your browser.
+
 > We didn’t have this back then. Now we do. What shall we learn?
 
 A self-study workbench that turns a moment of curiosity into something you can try, practise and revisit. Pick a resource, plan a short study session, or return to an exercise when it is due. **Machine learning is the subject of the current public demo.** The site interface is in Chinese.
@@ -21,9 +23,9 @@ A self-study workbench that turns a moment of curiosity into something you can t
 python -m http.server 4330 --bind 127.0.0.1
 ```
 
-This is a static site. Serve this directory over HTTP or use it as the site root on GitHub Pages. The site and experiments run without a build step, an account or an AI API. Linked resources open on their original sites.
+The live demo runs on GitHub Pages. You can also serve this directory over HTTP to run it locally. The site and experiments run without a build step, an account or an AI API. Linked resources open on their original sites.
 
-Answers, drafts and review history stay in the current browser. Export a JSON backup from the workbench's resources and records page before clearing site data or switching devices. Importing a backup merges its attempt history.
+Answers, drafts and review history stay in the current browser. Export a JSON backup from the workbench's resources and records page before clearing site data or switching devices. Importing a backup merges its attempt history. You can also use it to bring your progress from the local site to the online version.
 
 Select the home page’s “Try one exercise” button to jump to the next task, with due reviews first. For a short demo, take the three-minute tour and compare the single-layer and two-layer models. After you submit an exercise, the review page shows when to come back.
 
