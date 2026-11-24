@@ -1,26 +1,31 @@
-const google = 'https://developers.google.cn/machine-learning/crash-course/';
+import {english, t} from './i18n.js';
+import {exerciseText, topicText} from './content.en.js';
+
+const google = t('https://developers.google.cn', 'https://developers.google.com') + '/machine-learning/crash-course/';
 const sklearn = 'https://scikit-learn.org/stable/';
-const d2l = 'https://zh.d2l.ai/';
+const d2l = t('https://zh.d2l.ai/', 'https://d2l.ai/');
+const googleLanguage = t('?hl=zh-cn', '?hl=en');
 
 export const sources = {
-  split: ['scikit-learn · 常见陷阱与数据泄漏', sklearn + 'common_pitfalls.html#data-leakage'],
-  scale: ['scikit-learn · 数据预处理', sklearn + 'modules/preprocessing.html'],
-  linear: ['Google · 线性回归', google + 'linear-regression?hl=zh-cn'],
-  gradient: ['《动手学深度学习》· 梯度下降', d2l + 'chapter_optimization/gd.html'],
-  logistic: ['Google · 逻辑回归', google + 'logistic-regression?hl=zh-cn'],
-  metrics: ['Google · 准确率、精确率与召回率', google + 'classification/accuracy-precision-recall?hl=zh-cn'],
-  generalization: ['Google · 泛化与过拟合', google + 'overfitting?hl=zh-cn'],
-  trees: ['scikit-learn · 决策树', sklearn + 'modules/tree.html'],
-  ensemble: ['scikit-learn · 集成方法', sklearn + 'modules/ensemble.html'],
+  split: [t('scikit-learn · 常见陷阱与数据泄漏', 'scikit-learn · Common pitfalls and data leakage'), sklearn + 'common_pitfalls.html#data-leakage'],
+  scale: [t('scikit-learn · 数据预处理', 'scikit-learn · Preprocessing'), sklearn + 'modules/preprocessing.html'],
+  linear: [t('Google · 线性回归', 'Google · Linear regression'), google + 'linear-regression' + googleLanguage],
+  gradient: [t('《动手学深度学习》· 梯度下降', 'Dive into Deep Learning · Gradient descent'), d2l + 'chapter_optimization/gd.html'],
+  logistic: [t('Google · 逻辑回归', 'Google · Logistic regression'), google + 'logistic-regression' + googleLanguage],
+  metrics: [t('Google · 准确率、精确率与召回率', 'Google · Accuracy, precision, and recall'), google + 'classification/accuracy-precision-recall' + googleLanguage],
+  generalization: [t('Google · 泛化与过拟合', 'Google · Generalization and overfitting'), google + 'overfitting' + googleLanguage],
+  trees: [t('scikit-learn · 决策树', 'scikit-learn · Decision trees'), sklearn + 'modules/tree.html'],
+  ensemble: [t('scikit-learn · 集成方法', 'scikit-learn · Ensemble methods'), sklearn + 'modules/ensemble.html'],
   cluster: ['scikit-learn · K-means', sklearn + 'modules/clustering.html#k-means'],
-  pca: ['scikit-learn · 主成分分析', sklearn + 'modules/decomposition.html#principal-component-analysis-pca'],
-  neural: ['《动手学深度学习》· 多层感知机', d2l + 'chapter_multilayer-perceptrons/mlp.html'],
-  conv: ['PyTorch · Conv2d 输出尺寸', 'https://docs.pytorch.org/docs/2.15/generated/torch.nn.Conv2d.html']
+  pca: [t('scikit-learn · 主成分分析', 'scikit-learn · Principal component analysis'), sklearn + 'modules/decomposition.html#principal-component-analysis-pca'],
+  neural: [t('《动手学深度学习》· 多层感知机', 'Dive into Deep Learning · Multilayer perceptrons'), d2l + 'chapter_multilayer-perceptrons/mlp.html'],
+  conv: [t('PyTorch · Conv2d 输出尺寸', 'PyTorch · Conv2d output shapes'), 'https://docs.pytorch.org/docs/2.15/generated/torch.nn.Conv2d.html']
 };
 
-export const stages = ['数据与基础', '监督学习', '评估与表示', '神经网络'];
+export const stages = [t('数据与基础', 'Data and foundations'), t('监督学习', 'Supervised learning'), t('评估与表示', 'Evaluation and representations'), t('神经网络', 'Neural networks')];
 
 function topic(id, title, column, depends_on, summary, pitfall, reading) {
+  if (english) [title, summary, pitfall] = topicText[id];
   return {id, title, column, depends_on, summary, pitfall, sources: reading};
 }
 
@@ -69,6 +74,7 @@ export const thresholdSamples = [
 ];
 
 function numeric(topic_id, id, title, minutes, question, hint, answer, values, skill_id = id) {
+  if (english) [title, question, hint, answer] = exerciseText[id];
   return {
     topic_id, id, title, minutes, question, hints: [hint], answer, skill_id,
     check: {type:'numeric', values, tolerance:.005}
@@ -76,6 +82,7 @@ function numeric(topic_id, id, title, minutes, question, hint, answer, values, s
 }
 
 function open(topic_id, id, title, minutes, question, hint, answer, rubric) {
+  if (english) [title, question, hint, answer, rubric] = exerciseText[id];
   return {topic_id, id, title, minutes, question, hints:[hint], answer, rubric, check:{type:'self'}, skill_id:id};
 }
 

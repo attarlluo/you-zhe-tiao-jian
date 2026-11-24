@@ -4,41 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f5ed">
-  <meta name="description" content="以前没这条件。现在有了，学点什么？从自学机器学习开始，做一题，按自己的进度接着学。">
-  <title>有这条件 · 自学机器学习</title>
+  <meta name="description" content="以前没这条件。现在有了，学点什么？从自学机器学习开始，做一题，按自己的进度接着学。" data-en-content="We didn’t have this back then. Now we do. Start with a machine learning exercise and keep going at your own pace.">
+  <title data-en="Now We Can · Learn Machine Learning">有这条件 · 自学机器学习</title>
   <link rel="stylesheet" href="./assets/theme.css">
   <link rel="stylesheet" href="./assets/showcase.css">
   <script type="module" src="./assets/showcase.js"></script>
 </head>
 <body>
-  <a class="skip" href="#main">跳到内容</a>
+  <a class="skip" href="#main" data-en="Skip to content">跳到内容</a>
   <header class="site-head shell">
-    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">∿</span><span>有这条件</span></a>
-    <nav class="site-nav" aria-label="页面导航">
-      <a href="#lab">实验</a><a href="#map">学习路径</a><a href="./explore.html">学习海洋球</a>
-      <a class="button outline" href="./study.html">复习工作台 <span data-icon="arrow-up-right"></span></a>
-      <button class="text-button motion-toggle" id="motion" type="button">减少动效</button>
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">∿</span><span data-en="Now We Can">有这条件</span></a>
+    <nav class="site-nav" aria-label="页面导航" data-en-aria-label="Site navigation">
+      <a href="#lab" data-en="Labs">实验</a><a href="#map" data-en="Learning path">学习路径</a><a href="./explore.html" data-en="Resource pool">学习海洋球</a>
+      <a class="button outline" href="./study.html"><span data-en="Study workbench">复习工作台</span> <span data-icon="arrow-up-right"></span></a>
+      <button type="button" id="language" class="language-toggle" lang="en" hidden>English</button>
+      <button class="text-button motion-toggle" id="motion" type="button" data-en="Reduce motion">减少动效</button>
     </nav>
   </header>
   <main class="shell" id="main">
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-copy">
-        <p class="hero-topic">第一站 · 自学机器学习</p>
-        <h1 id="hero-heading">有这条件</h1>
-        <p class="hero-tagline">以前没这条件。<br>现在有了，学点什么？</p>
-        <div class="hero-actions"><a class="button primary" href="./study.html#next">先做一题 <span data-icon="arrow-right"></span></a><button class="text-button" id="tour-start" type="button">3 分钟导学</button></div>
+        <p class="hero-topic" data-en="First stop · Machine learning">第一站 · 自学机器学习</p>
+        <h1 id="hero-heading" data-en="Now We Can">有这条件</h1>
+        <p class="hero-tagline"><span data-en="We didn’t have this back then.">以前没这条件。</span><br><span data-en="Now we do. What shall we learn?">现在有了，学点什么？</span></p>
+        <div class="hero-actions"><a class="button primary" href="./study.html#next"><span data-en="Try an exercise">先做一题</span> <span data-icon="arrow-right"></span></a><button class="text-button" id="tour-start" type="button" data-en="3-minute tour">3 分钟导学</button></div>
       </div>
-      <figure class="hero-figure"><img src="./assets/art/decision-field.webp" width="1440" height="1120" alt="两条螺旋状的示例数据，被弯曲的分类边界分成两组"></figure>
+      <figure class="hero-figure"><img src="./assets/art/decision-field.webp" width="1440" height="1120" alt="两条螺旋状的示例数据，被弯曲的分类边界分成两组" data-en-alt="Two spirals of sample data separated by a curved decision boundary"></figure>
     </section>
 
-    <section class="chapter" aria-label="互动实验">
+    <section class="chapter" aria-label="互动实验" data-en-aria-label="Interactive labs">
       <section class="lab" id="lab" aria-labelledby="lab-heading">
-        <div class="lab-head"><div><p class="section-label">异或分类</p><h2 id="lab-heading">一条直线够吗？</h2></div><p class="score" id="score" role="status"><strong>3 / 4</strong><span>分类正确</span></p></div>
-        <div class="model-switch" role="group" aria-label="选择分类模型">
-          <button type="button" data-model="linear" aria-pressed="true">单层感知机</button>
-          <button type="button" data-model="hidden" aria-pressed="false">两层网络</button>
+        <div class="lab-head"><div><p class="section-label" data-en="XOR classification">异或分类</p><h2 id="lab-heading" data-en="Is one straight line enough?">一条直线够吗？</h2></div><p class="score" id="score" role="status"><strong>3 / 4</strong><span data-en="Correct">分类正确</span></p></div>
+        <div class="model-switch" role="group" aria-label="选择分类模型" data-en-aria-label="Choose a classification model">
+          <button type="button" data-model="linear" aria-pressed="true" data-en="Single-layer perceptron">单层感知机</button>
+          <button type="button" data-model="hidden" aria-pressed="false" data-en="Two-layer network">两层网络</button>
         </div>
-        <div class="plot-wrap"><canvas id="plot" aria-label="XOR 样本与分类区域" role="img"></canvas><div class="plot-key"><span><i class="dot zero"></i>目标 0</span><span><i class="dot one"></i>目标 1</span><span><i class="dot error"></i>错分</span></div></div>
+        <div class="plot-wrap"><canvas id="plot" aria-label="XOR 样本与分类区域" data-en-aria-label="XOR samples and decision regions" role="img"></canvas><div class="plot-key"><span><i class="dot zero"></i><span data-en="Target 0">目标 0</span></span><span><i class="dot one"></i><span data-en="Target 1">目标 1</span></span><span><i class="dot error"></i><span data-en="Misclassified">错分</span></span></div></div>
         <div class="lab-bottom">
           <div id="sliders" class="sliders">
             <label for="w1">w₁ <output id="w1-value">1.0</output><input id="w1" type="range" min="-3" max="3" step="0.1" value="1"></label>
@@ -46,61 +47,61 @@
             <label for="bias">bias <output id="bias-value">−0.5</output><input id="bias" type="range" min="-3" max="3" step="0.1" value="-0.5"></label>
           </div>
           <div id="gates" class="gates" hidden><code>h₁ = step(x₁ + x₂ − 0.5)</code><code>h₂ = step(x₁ + x₂ − 1.5)</code><code>ŷ = step(h₁ − h₂ − 0.5)</code></div>
-          <div class="sample-row"><span>选择样本</span><div class="sample-buttons" id="samples" role="group" aria-label="选择 XOR 样本"></div><button type="button" id="sequence" class="text-button" aria-pressed="false">依次播放</button></div>
-          <div id="signal-flow" class="signal-flow" aria-label="当前样本的计算路径"></div>
+          <div class="sample-row"><span data-en="Choose a sample">选择样本</span><div class="sample-buttons" id="samples" role="group" aria-label="选择 XOR 样本" data-en-aria-label="Choose an XOR sample"></div><button type="button" id="sequence" class="text-button" aria-pressed="false" data-en="Play all">依次播放</button></div>
+          <div id="signal-flow" class="signal-flow" aria-label="当前样本的计算路径" data-en-aria-label="Computation for the current sample"></div>
           <p id="sample-result" class="sample-result" aria-live="polite"></p>
         </div>
       </section>
     </section>
 
-    <section class="guide" id="guide" aria-label="三分钟导学流程" hidden>
-      <div class="guide-content"><span class="section-label" id="guide-label"></span><progress id="guide-progress" max="3" value="1" aria-label="导学进度"></progress><h2 id="guide-title"></h2><p id="guide-copy"></p></div>
-      <div class="guide-actions"><button type="button" class="button outline" id="tour-back">上一步</button><button type="button" class="button primary" id="tour-next">下一步</button><button type="button" class="text-button" id="tour-close">退出导学</button></div>
+    <section class="guide" id="guide" aria-label="三分钟导学流程" data-en-aria-label="Three-minute tour" hidden>
+      <div class="guide-content"><span class="section-label" id="guide-label"></span><progress id="guide-progress" max="3" value="1" aria-label="导学进度" data-en-aria-label="Tour progress"></progress><h2 id="guide-title"></h2><p id="guide-copy"></p></div>
+      <div class="guide-actions"><button type="button" class="button outline" id="tour-back" data-en="Back">上一步</button><button type="button" class="button primary" id="tour-next" data-en="Next">下一步</button><button type="button" class="text-button" id="tour-close" data-en="Exit tour">退出导学</button></div>
     </section>
 
     <section class="check-panel" id="check" aria-labelledby="check-heading">
-      <div><h2 id="check-heading">先猜一猜</h2><p>一条直线最多能正确分类几个 XOR 样本？</p></div>
-      <div><div class="choices" id="choices" role="group" aria-label="选择你的答案"></div><p id="feedback" class="feedback" role="status">选择答案后查看解释。</p><button class="text-button" id="retry" type="button" hidden>再次作答</button></div>
+      <div><h2 id="check-heading" data-en="Take a guess">先猜一猜</h2><p data-en="How many XOR samples can a single line classify correctly?">一条直线最多能正确分类几个 XOR 样本？</p></div>
+      <div><div class="choices" id="choices" role="group" aria-label="选择你的答案" data-en-aria-label="Choose your answer"></div><p id="feedback" class="feedback" role="status" data-en="Choose an answer to see the explanation.">选择答案后查看解释。</p><button class="text-button" id="retry" type="button" hidden data-en="Try again">再次作答</button></div>
     </section>
 
     <section class="convolution" id="classification" aria-labelledby="threshold-heading">
-      <div class="section-head"><div><p class="section-label">分类阈值</p><h2 id="threshold-heading">阈值提高，谁会被漏掉？</h2></div></div>
+      <div class="section-head"><div><p class="section-label" data-en="Classification threshold">分类阈值</p><h2 id="threshold-heading" data-en="What do we miss when the threshold rises?">阈值提高，谁会被漏掉？</h2></div></div>
       <div class="conv-panel threshold-panel">
-        <label for="threshold">正类阈值 <output id="threshold-value">0.60</output></label>
+        <label for="threshold"><span data-en="Positive-class threshold">正类阈值</span> <output id="threshold-value">0.60</output></label>
         <input type="range" id="threshold" min="0" max="100" value="60" aria-describedby="threshold-rule">
-        <p id="threshold-rule">分数达到阈值即判为正类。</p>
-        <ol id="threshold-samples" class="threshold-samples" aria-label="十个样本"></ol>
+        <p id="threshold-rule" data-en="A sample is classified as positive when its score meets or exceeds the threshold.">分数达到阈值即判为正类。</p>
+        <ol id="threshold-samples" class="threshold-samples" aria-label="十个样本" data-en-aria-label="Ten samples"></ol>
         <dl id="threshold-summary" class="threshold-summary" aria-live="polite"></dl>
-        <a class="button outline" href="./study.html#practice/threshold-tradeoff">做一道阈值题</a>
+        <a class="button outline" href="./study.html#practice/threshold-tradeoff" data-en="Try a threshold exercise">做一道阈值题</a>
       </div>
     </section>
 
     <section class="convolution" id="convolution" aria-labelledby="conv-heading">
-      <div class="section-head"><div><p class="section-label">卷积窗口</p><h2 id="conv-heading">一个输出格，看向哪里？</h2></div><p>改变步幅或填充，再点一个输出格。</p></div>
+      <div class="section-head"><div><p class="section-label" data-en="Convolution window">卷积窗口</p><h2 id="conv-heading" data-en="Which inputs does this output cell see?">一个输出格，看向哪里？</h2></div><p data-en="Change the stride or padding, then select an output cell.">改变步幅或填充，再点一个输出格。</p></div>
       <div class="conv-panel">
         <div class="conv-controls">
-          <label for="stride">步幅 <i>S</i><select id="stride"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
-          <label for="padding">填充 <i>P</i><select id="padding"><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></label>
+          <label for="stride"><span data-en="Stride">步幅</span> <i>S</i><select id="stride"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+          <label for="padding"><span data-en="Padding">填充</span> <i>P</i><select id="padding"><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></label>
           <p id="conv-formula" aria-live="polite"></p>
         </div>
         <div class="conv-comparison">
-          <figure><figcaption>输入 <span id="conv-input-size"></span></figcaption><div class="conv-grid" id="conv-input" aria-hidden="true"></div></figure>
-          <figure><figcaption>输出 <span id="conv-output-size"></span></figcaption><div class="conv-grid" id="conv-output" role="group" aria-label="输出格，方向键切换位置"></div></figure>
+          <figure><figcaption><span data-en="Input">输入</span> <span id="conv-input-size"></span></figcaption><div class="conv-grid" id="conv-input" aria-hidden="true"></div></figure>
+          <figure><figcaption><span data-en="Output">输出</span> <span id="conv-output-size"></span></figcaption><div class="conv-grid" id="conv-output" role="group" aria-label="输出格，方向键切换位置" data-en-aria-label="Output cells. Use the arrow keys to move."></div></figure>
         </div>
-        <div class="conv-footer"><p id="conv-detail" role="status"></p><a class="button outline" href="./study.html#practice/conv-shape">做一道卷积题</a></div>
+        <div class="conv-footer"><p id="conv-detail" role="status"></p><a class="button outline" href="./study.html#practice/conv-shape" data-en="Try a convolution exercise">做一道卷积题</a></div>
       </div>
     </section>
 
     <section class="map-section" id="map" aria-labelledby="map-heading">
-      <div class="section-head"><div><h2 id="map-heading">学习路径</h2></div><p><span id="topic-count">12</span> 个主题 · <span id="unit-count">24</span> 道练习</p></div>
+      <div class="section-head"><div><h2 id="map-heading" data-en="Learning path">学习路径</h2></div><p><span id="topic-count">12</span> <span data-en="topics ·">个主题 ·</span> <span id="unit-count">24</span> <span data-en="exercises">道练习</span></p></div>
       <div class="map-layout"><div class="topic-browser">
-        <div class="topic-tools"><label><span data-icon="search"></span><input id="topic-search" type="search" placeholder="搜索主题" aria-label="搜索主题"></label>
-          <select id="topic-stage" aria-label="学习阶段"><option value="">全部阶段</option></select></div>
+        <div class="topic-tools"><label><span data-icon="search"></span><input id="topic-search" type="search" placeholder="搜索主题" data-en-placeholder="Search topics" aria-label="搜索主题" data-en-aria-label="Search topics"></label>
+          <select id="topic-stage" aria-label="学习阶段" data-en-aria-label="Learning stage"><option value="" data-en="All stages">全部阶段</option></select></div>
         <p id="topic-count-summary" role="status"></p><div class="topic-grid" id="topics"></div></div>
-        <article class="topic-detail" id="topic-detail"><p>选择一个机器学习主题。</p></article></div>
+        <article class="topic-detail" id="topic-detail"><p data-en="Choose a machine learning topic.">选择一个机器学习主题。</p></article></div>
     </section>
-    <section class="explore-invite"><div><h2>出去看看</h2><p>视频、可视化和在线读物，随手捞一个。</p></div><a class="button primary" href="./explore.html">逛学习海洋球 <span data-icon="arrow-right"></span></a></section>
-    <footer class="site-foot"><span>有这条件</span><a href="./study.html#sources">学习记录与公开参考</a></footer>
+    <section class="explore-invite"><div><h2 data-en="Explore something new">出去看看</h2><p data-en="Pick a video, visualization, or online reading.">视频、可视化和在线读物，随手捞一个。</p></div><a class="button primary" href="./explore.html"><span data-en="Explore the resource pool">逛学习海洋球</span> <span data-icon="arrow-right"></span></a></section>
+    <footer class="site-foot"><span data-en="Now We Can">有这条件</span><a href="./study.html#sources" data-en="Study records and references">学习记录与公开参考</a></footer>
   </main>
 </body>
 </html>

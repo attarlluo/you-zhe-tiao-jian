@@ -1,3 +1,4 @@
+import {english, t} from './i18n.js';
 export const esc = value => String(value ?? '').replace(/[&<>"']/g, character =>
   ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[character]);
 
@@ -12,7 +13,7 @@ export function checkAnswer(unit, answer) {
 
 export const verified = attempt => attempt?.outcome==='correct' && attempt.independent===true && attempt.check_result===true;
 export const stateLabels = {
-  unseen:'未诊断', attempted:'已尝试', passed:'独立结果通过', due:'到期复测', retest:'变式延迟通过'
+  unseen:t('未诊断', 'Not attempted'), attempted:t('已尝试', 'Attempted'), passed:t('独立结果通过', 'Passed independently'), due:t('到期复测', 'Review due'), retest:t('变式延迟通过', 'Follow-up passed')
 };
 
 export function unitState(unit, attempts) {
@@ -20,8 +21,8 @@ export function unitState(unit, attempts) {
   if (!latest) return {label:stateLabels.unseen,key:'unseen'};
   if (Date.parse(latest.due)<=Date.now()) return {label:stateLabels.due,key:'due'};
   if (verified(latest)) return {label:stateLabels.passed,key:'passed'};
-  const label = latest.assessment_type==='self' ? '开放题 · 自评' :
-    latest.check_result ? '辅助后核对通过' : '需要巩固';
+  const label = latest.assessment_type==='self' ? t('开放题 · 自评', 'Open-ended · self-assessed') :
+    latest.check_result ? t('辅助后核对通过', 'Passed with help') : t('需要巩固', 'Needs practice');
   return {label,key:'attempted'};
 }
 
@@ -32,15 +33,17 @@ export function dueDate(now,correct,independent,prior) {
 }
 
 export function knowledgeGraph(topics, selected, stageLabels) {
-  if (!topics.length) return '<p class="empty">还没有学习主题。</p>';
-  const gap = 198, nodeWidth = 167;
+  if (!topics.length) return `<p class="empty">${t('还没有学习主题。', 'No learning topics yet.')}</p>`;
+  const gap = english ? 244 : 198;
+  const nodeWidth = gap - 31;
+  const rowGap = english ? 112 : 88;
   const width = stageLabels.length * gap;
   const counts = Array(stageLabels.length).fill(0);
   const positions = new Map();
   for (const topic of topics) {
-    positions.set(topic.id,{x:19+topic.column*gap,y:47+counts[topic.column]++*88});
+    positions.set(topic.id,{x:19+topic.column*gap,y:47+counts[topic.column]++*rowGap});
   }
-  const height = Math.max(...counts)*88+42;
+  const height = Math.max(...counts)*rowGap+42;
   const paths = topics.flatMap(topic => topic.depends_on.map(parent => {
     const a = positions.get(parent), b = positions.get(topic.id);
     const path = a.x===b.x ?
@@ -56,6 +59,6 @@ export function knowledgeGraph(topics, selected, stageLabels) {
     return `<button class="map-node ${esc(topic.state)}" data-topic="${esc(topic.id)}" aria-pressed="${topic.id===selected}"
       style="left:${p.x}px;top:${p.y}px;width:${nodeWidth}px"><strong>${esc(topic.title)}</strong><span>${stateLabels[topic.state]}</span></button>`;
   }).join('');
-  return `<div class="graph-scroll" tabindex="0" aria-label="知识路径，可横向滚动"><div class="graph-canvas" style="width:${width}px;height:${height}px">
+  return `<div class="graph-scroll" tabindex="0" aria-label="${t('知识路径，可横向滚动', 'Learning path. Scroll horizontally.')}"><div class="graph-canvas" style="width:${width}px;height:${height}px">
     <svg width="${width}" height="${height}" aria-hidden="true">${marker}${paths}</svg>${columns}${nodes}</div></div>`;
 }

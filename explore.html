@@ -3,39 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="机器学习的互动实验、直觉视频与公开读物。在学习海洋球里随机发现，或切换完整清单。">
-  <title>学习海洋球 · 有这条件</title>
+  <meta name="description" content="机器学习的互动实验、直觉视频与公开读物。在学习海洋球里随机发现，或切换完整清单。" data-en-content="Explore interactive machine learning labs, videos, and public readings. Draw a resource at random or browse the full list.">
+  <title data-en="Resource Pool · Now We Can">学习海洋球 · 有这条件</title>
   <link rel="stylesheet" href="./assets/theme.css">
   <link rel="stylesheet" href="./assets/explore.css">
   <script type="module" src="./assets/explore.js"></script>
 </head>
 <body>
-  <a class="skip" href="#main">跳到内容</a>
+  <a class="skip" href="#main" data-en="Skip to content">跳到内容</a>
   <header class="site-head shell">
-    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">∿</span>有这条件</a>
-    <nav class="site-nav" aria-label="页面导航">
-      <a href="./#lab">实验</a><a href="./#map">学习路径</a><a href="./explore.html" aria-current="page">学习海洋球</a>
-      <a class="button outline" href="./study.html">复习工作台</a>
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">∿</span><span data-en="Now We Can">有这条件</span></a>
+    <nav class="site-nav" aria-label="页面导航" data-en-aria-label="Site navigation">
+      <a href="./#lab" data-en="Labs">实验</a><a href="./#map" data-en="Learning path">学习路径</a><a href="./explore.html" aria-current="page" data-en="Resource pool">学习海洋球</a>
+      <a class="button outline" href="./study.html" data-en="Study workbench">复习工作台</a>
+      <button type="button" id="language" class="language-toggle" lang="en" hidden>English</button>
     </nav>
   </header>
   <main class="shell" id="main" tabindex="-1">
     <div class="explore-heading">
-      <div><h1>学习海洋球</h1><p>顺着兴趣捞一个。主题可以交叉，资源也可以跨区。</p></div>
-      <button type="button" id="draw-resource" class="button primary">随机捞一个 <span data-icon="arrow-right"></span></button>
+      <div><h1 data-en="Resource pool">学习海洋球</h1><p data-en="Follow your curiosity. Topics overlap, and resources can drift between them.">顺着兴趣捞一个。主题可以交叉，资源也可以跨区。</p></div>
+      <button type="button" id="draw-resource" class="button primary"><span data-en="Draw a resource">随机捞一个</span> <span data-icon="arrow-right"></span></button>
     </div>
     <div class="explore-toolbar">
-      <nav aria-label="资源视图"><a data-mode="pool" href="#pool">海洋球</a><a data-mode="list" href="#list">完整清单</a></nav>
-      <div class="atlas-actions"><button type="button" id="scatter-pool" class="text-button">重新撒球</button>
-        <button type="button" id="pause-pool" class="text-button">暂停漂浮</button></div>
+      <nav aria-label="资源视图" data-en-aria-label="Resource view"><a data-mode="pool" href="#pool" data-en="Pool">海洋球</a><a data-mode="list" href="#list" data-en="Full list">完整清单</a></nav>
+      <div class="atlas-actions"><button type="button" id="scatter-pool" class="text-button" data-en="Scatter again">重新撒球</button>
+        <button type="button" id="pause-pool" class="text-button" data-en="Pause drift">暂停漂浮</button></div>
     </div>
-    <div class="topic-controls" id="topic-controls" aria-label="按主题筛选" role="group"></div>
+    <div class="topic-controls" id="topic-controls" aria-label="按主题筛选" data-en-aria-label="Filter by topic" role="group"></div>
     <p class="resource-count" id="resource-count" role="status"></p>
     <div id="resource-pools" class="resource-pools"></div>
     <div id="resource-list" class="resource-list" hidden></div>
-    <footer class="site-foot"><span>有这条件</span><a href="./">回到互动实验</a></footer>
+    <footer class="site-foot"><span data-en="Now We Can">有这条件</span><a href="./" data-en="Back to the labs">回到互动实验</a></footer>
   </main>
   <dialog id="resource-dialog" aria-labelledby="resource-title">
-    <button type="button" id="close-resource" class="text-button" autofocus>关闭</button>
+    <button type="button" id="close-resource" class="text-button" autofocus data-en="Close">关闭</button>
     <img id="resource-art" alt="" width="300" height="300">
     <div class="resource-body">
       <p class="resource-by" id="resource-by"></p>
@@ -43,7 +44,7 @@
       <p id="resource-topics" class="resource-topics"></p>
       <p id="resource-preview"></p>
       <p id="resource-first"></p>
-      <a id="resource-go" class="button primary" target="_blank" rel="noopener noreferrer">打开资源 <span data-icon="arrow-up-right"></span></a>
+      <a id="resource-go" class="button primary" target="_blank" rel="noopener noreferrer"><span data-en="Open resource">打开资源</span> <span data-icon="arrow-up-right"></span></a>
       <p id="resource-credit" class="resource-credit" hidden></p>
     </div>
   </dialog>

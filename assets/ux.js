@@ -1,3 +1,4 @@
+import {t} from './i18n.js';
 const motionKey = 'ml-self-study-motion';
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 const animations = new Set();
@@ -5,14 +6,14 @@ const animations = new Set();
 export const icon = name => `<svg class="ui-icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="${new URL(`./lucide.svg#${name}`, import.meta.url).href}"></use></svg>`;
 export const reducedMotion = () => motionPreference.matches || document.documentElement.dataset.motion === 'reduced';
 
-export function initMotion(button, {pause='减少动效', resume='恢复动效', onChange=()=>{}} = {}) {
+export function initMotion(button, {pause=t('减少动效', 'Reduce motion'), resume=t('恢复动效', 'Restore motion'), onChange=()=>{}} = {}) {
   let manuallyReduced = false;
   try { manuallyReduced = localStorage.getItem(motionKey) === '1'; } catch {}
   const sync = () => {
     document.documentElement.dataset.motion = manuallyReduced ? 'reduced' : 'auto';
     const quiet = reducedMotion();
     button.setAttribute('aria-pressed', String(quiet));
-    button.textContent = motionPreference.matches ? '动效已随系统暂停' : quiet ? resume : pause;
+    button.textContent = motionPreference.matches ? t('动效已随系统暂停', 'Paused by system') : quiet ? resume : pause;
     button.disabled = motionPreference.matches;
     if (quiet) animations.forEach(animation => animation.cancel());
     onChange(quiet);

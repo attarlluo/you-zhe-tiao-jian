@@ -1,3 +1,4 @@
+import {t} from './i18n.js';
 const inputSize = 6;
 const kernelSize = 3;
 const $ = id => document.getElementById(id);
@@ -27,8 +28,8 @@ export function mountConvolution() {
       return offset < padding || offset + kernelSize > inputSize + padding;
     }
     windowOverlay.style.setProperty('--window-size', `${kernelSize * ratio}%`);
-    $('conv-detail').textContent = `输出 (${row}, ${col}) ← 输入行 ${top - padding} 到 ${top - padding + kernelSize - 1}，列 ${left - padding} 到 ${left - padding + kernelSize - 1}。` +
-      (usedPadding(top) || usedPadding(left) ? ' 窗口包含零填充。' : '');
+    $('conv-detail').textContent = t(`输出 (${row}, ${col}) ← 输入行 ${top - padding} 到 ${top - padding + kernelSize - 1}，列 ${left - padding} 到 ${left - padding + kernelSize - 1}。`, `Output (${row}, ${col}) ← input rows ${top - padding} to ${top - padding + kernelSize - 1}, columns ${left - padding} to ${left - padding + kernelSize - 1}.`) +
+      (usedPadding(top) || usedPadding(left) ? t(' 窗口包含零填充。', ' The window includes zero padding.') : '');
     if (focus) active.focus({preventScroll:true});
   }
 
@@ -60,12 +61,12 @@ export function mountConvolution() {
       const cell = document.createElement('button');
       cell.type = 'button';
       cell.className = 'conv-cell';
-      cell.setAttribute('aria-label', `输出行 ${r}，列 ${c}`);
+      cell.setAttribute('aria-label', t(`输出行 ${r}，列 ${c}`, `Output row ${r}, column ${c}`));
       cell.addEventListener('click', () => select(r, c));
       return cell;
     });
     output.replaceChildren(...outputs);
-    $('conv-input-size').textContent = padding ? `${inputSize} × ${inputSize}，填充后 ${padded} × ${padded}` : `${inputSize} × ${inputSize}`;
+    $('conv-input-size').textContent = padding ? `${inputSize} × ${inputSize}${t('，填充后 ', ', padded to ')}${padded} × ${padded}` : `${inputSize} × ${inputSize}`;
     $('conv-output-size').textContent = `${outputSize} × ${outputSize}`;
     $('conv-formula').textContent = `⌊(${inputSize} + 2 × ${padding} − ${kernelSize}) / ${stride}⌋ + 1 = ${outputSize}`;
     select(Math.min(row, outputSize - 1), Math.min(col, outputSize - 1));

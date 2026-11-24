@@ -1,8 +1,11 @@
+import {t, countLabel, localizedLink, initLanguage} from './i18n.js';
 import { samples, target, linear, hidden } from './xor.mjs';
 import { icon, initMotion, reveal } from './ux.js';
 import { mountConvolution } from './convolution.js';
 import { mountThreshold } from './threshold.js';
 import { topics, stages, units, sources } from './content.js';
+
+initLanguage();
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#plot');
@@ -122,24 +125,24 @@ function renderLab(animate = false) {
   const [x, y] = samples[selected];
   const expected = target(x, y);
   const result = predict(x, y, params);
-  const match = result === expected ? '正确' : '错分';
+  const match = result === expected ? t('正确', 'Correct') : t('错分', 'Misclassified');
   let trace;
   let gates;
   if (model === 'linear') {
     const score = params[0] * x + params[1] * y + params[2];
-    trace = `加权和 ${score.toFixed(2)}`;
-    gates = `<div class="flow-stage"><span>加权和 z</span><strong>${score.toFixed(2)}</strong></div>`;
+    trace = t(`加权和 ${score.toFixed(2)}`, `weighted sum ${score.toFixed(2)}`);
+    gates = `<div class="flow-stage"><span>${t('加权和 z', 'Weighted sum z')}</span><strong>${score.toFixed(2)}</strong></div>`;
   } else {
     const { any, both } = hidden(x, y);
-    trace = `至少一个为 1：${any}，两个都为 1：${both}`;
-    gates = `<div class="flow-stage"><span>隐藏层</span><strong>OR ${any} <i>·</i> AND ${both}</strong></div>`;
+    trace = t(`至少一个为 1：${any}，两个都为 1：${both}`, `at least one 1: ${any}, both 1: ${both}`);
+    gates = `<div class="flow-stage"><span>${t('隐藏层', 'Hidden layer')}</span><strong>OR ${any} <i>·</i> AND ${both}</strong></div>`;
   }
   const flow = $('#signal-flow');
-  flow.innerHTML = `<div class="flow-stage"><span>输入</span><strong>(${x}, ${y})</strong></div>${icon('arrow-right')}${gates}${icon('arrow-right')}<div class="flow-stage ${result===expected?'match':'mismatch'}"><span>预测 / 目标</span><strong>${result} / ${expected}</strong></div>`;
+  flow.innerHTML = `<div class="flow-stage"><span>${t('输入', 'Input')}</span><strong>(${x}, ${y})</strong></div>${icon('arrow-right')}${gates}${icon('arrow-right')}<div class="flow-stage ${result===expected?'match':'mismatch'}"><span>${t('预测 / 目标', 'Prediction / target')}</span><strong>${result} / ${expected}</strong></div>`;
   if (animate) reveal(flow.querySelectorAll('.flow-stage'), {distance:5, duration:220, stagger:82});
   if (animate && scoreChanged) reveal([scoreDisplay]);
-  $('#sample-result').textContent = `(${x}, ${y}) · ${trace} · 预测 ${result} / 目标 ${expected} · ${match}`;
-  canvas.setAttribute('aria-label', `XOR 决策区域。${correct} 个样本分类正确，共 4 个。${$('#sample-result').textContent}`);
+  $('#sample-result').textContent = t(`(${x}, ${y}) · ${trace} · 预测 ${result} / 目标 ${expected} · ${match}`, `(${x}, ${y}) · ${trace} · prediction ${result} / target ${expected} · ${match}`);
+  canvas.setAttribute('aria-label', t(`XOR 决策区域。${correct} 个样本分类正确，共 4 个。${$('#sample-result').textContent}`, `XOR decision regions. ${correct} of 4 correct. ${$('#sample-result').textContent}`));
   draw(params);
 }
 
@@ -153,7 +156,7 @@ function stopSequence() {
   clearTimeout(sequenceTimer);
   sequenceTimer = undefined;
   $('#sequence').setAttribute('aria-pressed', 'false');
-  $('#sequence').innerHTML = icon('play') + '依次播放';
+  $('#sequence').innerHTML = icon('play') + t('依次播放', 'Play all');
 }
 
 $('#sequence').addEventListener('click', () => {
@@ -162,7 +165,7 @@ $('#sequence').addEventListener('click', () => {
   button.setAttribute('aria-pressed', 'true');
   function next(i) {
     selectSample(i, true);
-    button.innerHTML = icon('pause') + `暂停 ${i+1}/${samples.length}`;
+    button.innerHTML = icon('pause') + t(`暂停 ${i+1}/${samples.length}`, `Pause ${i+1}/${samples.length}`);
     sequenceTimer = setTimeout(() => i+1 < samples.length ? next(i+1) : stopSequence(), 1050);
   }
   next(0);
@@ -191,10 +194,10 @@ const choices = [2, 3, 4].map(value => {
     const feedback = $('#feedback');
     feedback.className = value === 3 ? 'feedback correct' : 'feedback incorrect';
     feedback.textContent = value === 3
-      ? '答对了。对角线上的同类样本无法用一条直线全部分开。初始的 OR 边界能答对三个。'
+      ? t('答对了。对角线上的同类样本无法用一条直线全部分开。初始的 OR 边界能答对三个。', 'Correct. A line cannot separate the two classes at opposite corners. The initial OR boundary gets three samples right.')
       : value === 4
-        ? '再想一想。连接两个正例、再连接两个负例，两条线段在中心相交。一条直线无法把它们放在完全不同的两侧。'
-        : '可以做得更好。回到单层模型，取 w₁=w₂=1、bias=−0.5，数一数只有哪个样本错分。';
+        ? t('再想一想。连接两个正例、再连接两个负例，两条线段在中心相交。一条直线无法把它们放在完全不同的两侧。', 'Try again. Join the two positive points, and then the two negative points. Their segments cross in the center, so a line cannot put them on opposite sides.')
+        : t('可以做得更好。回到单层模型，取 w₁=w₂=1、bias=−0.5，数一数只有哪个样本错分。', 'You can do better. Set w₁ = w₂ = 1 and bias = −0.5 in the single-layer model. Which one sample is wrong?');
     $('#retry').hidden = false;
     reveal([feedback], {distance:4});
   });
@@ -203,28 +206,28 @@ const choices = [2, 3, 4].map(value => {
 });
 $('#retry').addEventListener('click', () => {
   choices.forEach(button => button.setAttribute('aria-pressed', 'false'));
-  $('#feedback').textContent = '选择答案后查看解释。';
+  $('#feedback').textContent = t('选择答案后查看解释。', 'Choose an answer to see the explanation.');
   $('#feedback').className = 'feedback';
   $('#retry').hidden = true;
   choices[0].focus();
 });
 
 const tour = [
-  { title: '先观察错分', copy: '拖动 bias 或权重，再点开一个样本。看错误怎样从一个点移动到另一个点。', section: '#lab', model: 'linear' },
-  { title: '加一层隐藏单元', copy: '比较 (1, 1) 和 (0, 1)，看看 OR 与 AND 的输出。正例落在两条边界中间。', section: '#lab', model: 'hidden' },
-  { title: '把观察变成一道题', copy: '先猜最多分对几个，再看解释。也可以继续玩阈值实验，看看何时更容易漏报。', section: '#check' },
+  { title: t('先观察错分', 'Spot the error'), copy: t('拖动 bias 或权重，再点开一个样本。看错误怎样从一个点移动到另一个点。', 'Move the bias or a weight, then select a sample. Watch the error shift from one point to another.'), section: '#lab', model: 'linear' },
+  { title: t('加一层隐藏单元', 'Add a hidden layer'), copy: t('比较 (1, 1) 和 (0, 1)，看看 OR 与 AND 的输出。正例落在两条边界中间。', 'Compare (1, 1) and (0, 1) and check the OR and AND outputs. The positive samples fall between the two boundaries.'), section: '#lab', model: 'hidden' },
+  { title: t('把观察变成一道题', 'Try a quick check'), copy: t('先猜最多分对几个，再看解释。也可以继续玩阈值实验，看看何时更容易漏报。', 'Guess the most samples a line can classify, then read the explanation. Try the threshold lab to see when positives are missed.'), section: '#check' },
 ];
 let tourStep = 0;
 function showStep() {
   const step = tour[tourStep];
   $('#guide').hidden = false;
   document.documentElement.classList.add('tour-active');
-  $('#guide-label').textContent = `现场导学 ${tourStep + 1} / ${tour.length}`;
+  $('#guide-label').textContent = t(`现场导学 ${tourStep + 1} / ${tour.length}`, `Guided tour ${tourStep + 1} / ${tour.length}`);
   $('#guide-progress').value = tourStep + 1;
   $('#guide-title').textContent = step.title;
   $('#guide-copy').textContent = step.copy;
   $('#tour-back').disabled = tourStep === 0;
-  $('#tour-next').textContent = tourStep === tour.length - 1 ? '转到课程导图' : '下一步';
+  $('#tour-next').textContent = tourStep === tour.length - 1 ? t('转到课程导图', 'Open learning path') : t('下一步', 'Next');
   if (step.model) setModel(step.model);
   reveal([$('.guide-content')], {distance:4});
   $(step.section).scrollIntoView({ block: 'nearest' });
@@ -262,11 +265,11 @@ function showTopic(topic, animate = true) {
   const detail = $('#topic-detail');
   const title = element('h2', topic.title);
   title.tabIndex = -1;
-  detail.replaceChildren(title, element('p', topic.summary), element('p', '常见误区 · ' + topic.pitfall, 'pitfall'));
+  detail.replaceChildren(title, element('p', topic.summary), element('p', t('常见误区 · ', 'Pitfall · ') + topic.pitfall, 'pitfall'));
   const parents = topics.filter(other => topic.depends_on.includes(other.id));
   if (parents.length) {
     const group = element('div', '', 'path-links');
-    detail.append(element('h3', '建议先学'), group);
+    detail.append(element('h3', t('建议先学', 'Start with')), group);
     for (const item of parents) {
       const chip = element('button', item.title, 'button outline');
       chip.type = 'button';
@@ -278,11 +281,11 @@ function showTopic(topic, animate = true) {
   for (const unit of units.filter(unit => unit.topic_id === topic.id)) {
     const item = element('li');
     const link = element('a', unit.title);
-    link.href = './study.html#practice/' + encodeURIComponent(unit.id);
+    link.href = localizedLink('./study.html#practice/' + encodeURIComponent(unit.id));
     item.append(link);
     list.append(item);
   }
-  detail.append(element('h3', '自编练习'), list, element('h3', '公开参考'));
+  detail.append(element('h3', t('自编练习', 'Exercises')), list, element('h3', t('公开参考', 'Public references')));
   for (const key of topic.sources) {
     const [label, href] = sources[key];
     const link = element('a', label, 'button outline');
@@ -319,10 +322,10 @@ function filterTopics() {
     `${topic.title} ${topic.summary}`.toLowerCase().includes(query));
   const active = new Set(matches.map(topic => topic.id));
   for (const [id, button] of buttons) button.hidden = !active.has(id);
-  $('#topic-count-summary').textContent = matches.length ? `${matches.length} 个主题` : '没有符合条件的主题';
+  $('#topic-count-summary').textContent = matches.length ? countLabel(matches.length, '个主题', 'topic') : t('没有符合条件的主题', 'No matching topics');
   const next = matches.includes(selection) ? selection : matches[0];
   if (next) showTopic(next, false);
-  else $('#topic-detail').replaceChildren(element('p', '试试其他关键词或学习阶段。'));
+  else $('#topic-detail').replaceChildren(element('p', t('试试其他关键词或学习阶段。', 'Try a different search or learning stage.')));
 }
 $('#topic-search').addEventListener('input', filterTopics);
 $('#topic-stage').addEventListener('change', filterTopics);

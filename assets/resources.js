@@ -1,14 +1,17 @@
+import {english, t} from './i18n.js';
+import {resourceCredits, resourceText} from './resources.en.js';
+
 export const topics = [
-  {id:'math', title:'数学与数据'},
-  {id:'ml', title:'机器学习'},
-  {id:'deep', title:'深度学习', parent:'ml'},
-  {id:'ai', title:'AI 应用与系统', mapTitle:'AI 应用'}
+  {id:'math', title:t('数学与数据', 'Math and data')},
+  {id:'ml', title:t('机器学习', 'Machine learning')},
+  {id:'deep', title:t('深度学习', 'Deep learning'), parent:'ml'},
+  {id:'ai', title:t('AI 应用与系统', 'AI systems and applications'), mapTitle:t('AI 应用', 'AI applications')}
 ];
 
 export const formats = [
-  {id:'play', title:'互动实验'},
-  {id:'watch', title:'视频与课程'},
-  {id:'read', title:'读物与笔记'}
+  {id:'play', title:t('互动实验', 'Interactive labs')},
+  {id:'watch', title:t('视频与课程', 'Videos and courses')},
+  {id:'read', title:t('读物与笔记', 'Readings and notes')}
 ];
 
 export const resources = {
@@ -80,7 +83,7 @@ export const resources = {
   d2l: {
     format:'read', zones:['deep','ml'],
     name:'《动手学深度学习》', short:'动手学深度学习', by:'张阿斯顿等 · 中文教材与代码',
-    url:'https://zh.d2l.ai/',
+    url:t('https://zh.d2l.ai/', 'https://d2l.ai/'),
     preview:'把公式、解释和可以运行的代码放在一起。适合学完直觉后亲手做一遍。',
     first:'从多层感知机开始，顺着看一遍前向传播，再尝试修改隐藏单元数。'
   },
@@ -122,7 +125,7 @@ export const resources = {
   'google-ml': {
     format:'watch', zones:['math','ml'],
     name:'机器学习速成课程', short:'Google 机器学习', by:'Google for Developers · 简体中文',
-    url:'https://developers.google.cn/machine-learning/crash-course?hl=zh-cn',
+    url:t('https://developers.google.cn/machine-learning/crash-course?hl=zh-cn', 'https://developers.google.com/machine-learning/crash-course?hl=en'),
     preview:'把损失、数据质量、阈值和实际系统拆成可单独学习的单元。',
     first:'做分类模块的阈值练习，试着说明什么时候宁可多报。'
   },
@@ -225,3 +228,11 @@ export const resources = {
     first:'拿一个自动筛选案例做练习，写下出错时谁最可能受影响、怎样发现错误。'
   }
 };
+
+if (english) {
+  for (const [id, resource] of Object.entries(resources)) {
+    const [name, short, by, preview, first] = resourceText[id];
+    Object.assign(resource, {name, short, by, preview, first});
+    if (resource.credit) resource.credit = resourceCredits[id];
+  }
+}

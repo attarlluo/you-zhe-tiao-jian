@@ -1,3 +1,4 @@
+import {t} from './i18n.js';
 import {thresholdSamples} from './content.js';
 
 export function evaluateThreshold(samples, threshold) {
@@ -17,7 +18,7 @@ export function mountThreshold() {
   const items = thresholdSamples.map(([score, label]) => {
     const item = document.createElement('li');
     item.className = label ? 'actual-positive' : 'actual-negative';
-    item.innerHTML = `<strong>${score.toFixed(2)}</strong><span>真实${label?'正':'负'}</span><small></small>`;
+    item.innerHTML = `<strong>${score.toFixed(2)}</strong><span>${label ? t('真实正', 'True +') : t('真实负', 'True −')}</span><small></small>`;
     list.append(item);
     return item;
   });
@@ -29,11 +30,11 @@ export function mountThreshold() {
     thresholdSamples.forEach(([score, label], index) => {
       const predicted = Number(score >= threshold);
       items[index].classList.toggle('wrong', label !== predicted);
-      items[index].querySelector('small').textContent = `判${predicted?'正':'负'}${predicted!==label?' ×':''}`;
+      items[index].querySelector('small').textContent = `${predicted ? t('判正', 'Pred. +') : t('判负', 'Pred. −')}${predicted!==label?' ×':''}`;
     });
     const {tp,fp,fn,tn} = evaluateThreshold(thresholdSamples, threshold);
     const values = [['TP / FP', tp+' / '+fp], ['FN / TN', fn+' / '+tn],
-      ['精确率',ratio(tp,tp+fp)], ['召回率',ratio(tp,tp+fn)]];
+      [t('精确率', 'Precision'),ratio(tp,tp+fp)], [t('召回率', 'Recall'),ratio(tp,tp+fn)]];
     summary.innerHTML = values.map(([label,value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
   }
   slider.addEventListener('input', update);

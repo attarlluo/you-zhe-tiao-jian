@@ -1,12 +1,12 @@
-# 有这条件 · A Self-study Workbench
+# Now We Can (有这条件) · A Self-study Workbench
 
 [简体中文](README.md) · **English**
 
-[**Open the live demo**](https://attarlluo.github.io/you-zhe-tiao-jian/) to try an experiment, explore the resource map or start an exercise in your browser.
+[**Open the English demo**](https://attarlluo.github.io/you-zhe-tiao-jian/?lang=en) · [**简体中文演示**](https://attarlluo.github.io/you-zhe-tiao-jian/?lang=zh)
 
 > We didn’t have this back then. Now we do. What shall we learn?
 
-A self-study workbench that turns a moment of curiosity into something you can try, practise and revisit. Pick a resource, plan a short study session, or return to an exercise when it is due. **Machine learning is the subject of the current public demo.** The site interface is in Chinese.
+A self-study workbench that turns a moment of curiosity into something you can try, practise and revisit. Pick a resource, plan a short study session, or return to an exercise when it is due. **Machine learning is the subject of the current public demo.**
 
 ## What you can do
 
@@ -24,6 +24,8 @@ python -m http.server 4330 --bind 127.0.0.1
 ```
 
 The live demo runs on GitHub Pages. You can also serve this directory over HTTP to run it locally. The site and experiments run without a build step, an account or an AI API. Linked resources open on their original sites.
+
+Use **English / 简体中文** at the top of any page to switch the language of the labs, exercises, feedback, and resource descriptions. Your current page and saved progress carry over. Add `?lang=en` or `?lang=zh` to share a link in that language.
 
 Answers, drafts and review history stay in the current browser. Export a JSON backup from the workbench's resources and records page before clearing site data or switching devices. Importing a backup merges its attempt history. You can also use it to bring your progress from the local site to the online version.
 

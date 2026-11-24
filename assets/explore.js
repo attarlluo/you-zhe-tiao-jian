@@ -1,7 +1,10 @@
+import {t, countLabel, initLanguage} from './i18n.js';
 import {resources, topics, formats} from './resources.js';
 import {layoutFor, migrate, scatter} from './atlas.js';
 import {esc} from './learning.js';
 import {icon, initMotion, reducedMotion, reveal} from './ux.js';
+
+initLanguage();
 
 const $ = selector => document.querySelector(selector);
 const pools = $('#resource-pools');
@@ -20,10 +23,10 @@ let scale;
 let visibleBalls=[];
 
 document.querySelectorAll('[data-icon]').forEach(node=>{node.innerHTML=icon(node.dataset.icon);});
-$('#topic-controls').innerHTML = [{id:'all',title:'全部主题'},...topics].map(({id,title}) =>
+$('#topic-controls').innerHTML = [{id:'all',title:t('全部主题', 'All topics')},...topics].map(({id,title}) =>
   `<button type="button" data-topic-filter="${id}"><i></i>${title}</button>`).join('');
 
-pools.innerHTML = `<div class="atlas" aria-label="可交互的资源主题图">
+pools.innerHTML = `<div class="atlas" aria-label="${t('可交互的资源主题图', 'Interactive resource map')}">
   ${topics.map(({id,title,mapTitle})=>`<div class="territory territory-${id}" data-territory="${id}" aria-hidden="true"></div>
     <span class="region-title" data-region-title="${id}" aria-hidden="true">${mapTitle??title}</span>`).join('')}
   ${entries.map(([id,item])=>`<button type="button" class="ball" data-resource="${id}" data-tone="${item.zones[0]}"
@@ -59,7 +62,7 @@ function updateView() {
     button.setAttribute('aria-pressed',String(button.dataset.topicFilter===scope));
   }
   stage.dataset.scope=scope;
-  $('#resource-count').textContent=`${visibleBalls.length} 个资源`;
+  $('#resource-count').textContent=countLabel(visibleBalls.length, '个资源', 'resource');
 }
 
 function paint(ball) {
@@ -169,6 +172,6 @@ document.addEventListener('visibilitychange',syncMotion);
 $('.skip').onclick=event=>{event.preventDefault();$('#main').focus();};
 window.addEventListener('hashchange',showMode);
 new ResizeObserver(()=>fit()).observe(stage);
-initMotion($('#pause-pool'),{pause:'暂停漂浮',resume:'继续漂浮',onChange:syncMotion});
+initMotion($('#pause-pool'),{pause:t('暂停漂浮', 'Pause drift'),resume:t('继续漂浮', 'Resume drift'),onChange:syncMotion});
 updateView();
 showMode();

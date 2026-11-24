@@ -1,3 +1,4 @@
+import {t} from './i18n.js';
 import {units} from './content.js';
 import {checkAnswer} from './learning.js';
 
@@ -39,7 +40,7 @@ export function newId() {
 export function mergeBackup(text) {
   const backup = JSON.parse(text);
   const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
-  const fail = () => { throw new Error('备份格式不匹配，请选择本工作台导出的 JSON。'); };
+  const fail = () => { throw new Error(t('备份格式不匹配，请选择本工作台导出的 JSON。', 'Choose a JSON backup exported by this workbench.')); };
   if (!object(backup) || backup.version !== 1 || !Array.isArray(backup.attempts) ||
       !object(backup.drafts) || !budgets.includes(backup.minutes)) fail();
   const importedDrafts = {};
@@ -69,7 +70,7 @@ export function mergeBackup(text) {
     const existing = new Map(current.attempts.map(a => [a.id, a]));
     for (const [id, attempt] of importedHistory) {
       if (existing.has(id) && JSON.stringify(existing.get(id)) !== JSON.stringify(attempt)) {
-        throw new Error('这份备份中的部分作答与现有记录冲突。');
+        throw new Error(t('这份备份中的部分作答与现有记录冲突。', 'Some answers in this backup conflict with existing records.'));
       }
       existing.set(id, attempt);
     }

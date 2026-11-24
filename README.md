@@ -2,7 +2,7 @@
 
 **简体中文** · [English](README.en.md)
 
-[**在线打开「有这条件」**](https://attarlluo.github.io/you-zhe-tiao-jian/)，点开就能做实验、逛海洋球或开始练习。
+[**在线打开「有这条件」**](https://attarlluo.github.io/you-zhe-tiao-jian/?lang=zh) · [**English demo**](https://attarlluo.github.io/you-zhe-tiao-jian/?lang=en)
 
 > 以前没这条件。现在有了，学点什么？
 
@@ -24,6 +24,8 @@ python -m http.server 4330 --bind 127.0.0.1
 ```
 
 这是静态网站，在线版由 GitHub Pages 托管，也可以照上面的步骤在本地运行。页面和实验无需构建、账号或 AI API。外部资料在点开链接后由原网站提供。
+
+页面顶部的 **English / 简体中文** 可切换全站语言，包含实验反馈、练习和海洋球说明。切换时会保留当前页面和已经保存的进度。也可以直接分享带 `?lang=en` 或 `?lang=zh` 的地址。
 
 作答、草稿和复测记录保存在当前浏览器。清理站点数据或换设备前，在工作台的「资料与记录」导出 JSON。导入会合并作答历史。从本地版切换到网页版时，也可以用这个方式带上原有进度。
 
