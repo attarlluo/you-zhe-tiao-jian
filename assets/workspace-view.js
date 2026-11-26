@@ -1,6 +1,7 @@
 import {t, locale, minutesLabel} from './i18n.js';
 import {esc, knowledgeGraph, stateLabels, unitState} from './learning.js';
 import {icon, reveal} from './ux.js';
+import {coverageFor} from './coverage.js';
 
 export function weeklyActivity(attempts) {
   const days = Array.from({length: 7}, (_, index) => {
@@ -99,6 +100,7 @@ export function mountMap(container, {topics, units, attempts, stages, initial, o
       const practice = units.filter(u => u.topic_id === id);
       detail.innerHTML = `<div class="topic-head"><span class="eyebrow">${stateLabels[topic.state] ?? t('未诊断', 'Not attempted')}</span><h3 tabindex="-1">${esc(topic.title)}</h3></div>
         ${topic.summary?`<p>${esc(topic.summary)}</p>`:''}
+        <details class="topic-coverage"><summary>${t('练习范围与后续缺口','Practice scope and remaining gaps')}</summary><p>${esc(coverageFor(topic.id).prepared)}</p><p class="muted">${t('还可以继续学：','Continue with: ')}${esc(coverageFor(topic.id).remaining)}</p></details>
         ${topic.pitfall?`<p class="notice"><strong>${t('常见误区', 'Pitfall')}</strong> ${esc(topic.pitfall)}</p>`:''}
         ${detailLinks(parents, t('建议先学', 'Start with'))}${detailLinks(children, t('可以接着学', 'Learn next'))}
         <h4>${t('关联练习', 'Related exercises')}</h4>${practice.map(u => `<button class="topic-practice" data-open="${esc(u.id)}"><span>${esc(u.title)}<small>${minutesLabel(u.minutes)} · ${unitState(u, attempts).label}</small></span>${icon('arrow-right')}</button>`).join('') || `<p class="small muted">${t('练习待准备。', 'No exercises yet.')}</p>`}

@@ -1,6 +1,6 @@
 import {t} from './i18n.js';
 import {units} from './content.js';
-import {checkAnswer} from './learning.js';
+import {checkAnswer,legacyCheckAnswer} from './learning.js';
 
 const key = new URL('../', import.meta.url).pathname + 'ml-study-data-v1';
 const known = new Map(units.map(unit => [unit.id, unit]));
@@ -58,25 +58,25 @@ export function mergeBackup(text) {
         typeof a.at !== 'string' || typeof a.due !== 'string' || !Number.isFinite(Date.parse(a.at)) ||
         !Number.isFinite(Date.parse(a.due)) || Date.parse(a.due) <= Date.parse(a.at) ||
         typeof a.study_day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(a.study_day)) fail();
-    const result = checkAnswer(known.get(a.question_id), a.answer);
+    if(a.assessment_version!==undefined&&a.assessment_version!==2)fail();
+    if(['hint_used','answer_seen'].some(key=>a[key]!==undefined&&typeof a[key]!=='boolean'))fail();
+    if(a.assessment_version===2&&a.independent&&(a.hint_used||a.answer_seen))fail();
+    const result = (a.assessment_version===2?checkAnswer:legacyCheckAnswer)(known.get(a.question_id), a.answer);
     if (a.check_result !== result || (result !== null && a.outcome !== (result ? 'correct' : 'incorrect'))) fail();
-    importedHistory.set(a.id, {
-      id:a.id, question_id:a.question_id, at:a.at, study_day:a.study_day, due:a.due,
-      answer:a.answer, independent:a.independent, check_result:result, outcome:a.outcome,
-      assessment_type:result===null?'self':'automatic_result', error_note:a.error_note
-    });
+    importedHistory.set(a.id, {...a});
   }
+  const stable=value=>JSON.stringify(Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b))));
   return updateState(current => {
     const existing = new Map(current.attempts.map(a => [a.id, a]));
     for (const [id, attempt] of importedHistory) {
-      if (existing.has(id) && JSON.stringify(existing.get(id)) !== JSON.stringify(attempt)) {
+      if (existing.has(id) && stable(existing.get(id)) !== stable(attempt)) {
         throw new Error(t('这份备份中的部分作答与现有记录冲突。', 'Some answers in this backup conflict with existing records.'));
       }
       existing.set(id, attempt);
     }
     current.attempts = [...existing.values()].sort((a,b) => a.at.localeCompare(b.at));
     for (const [id, draft] of Object.entries(importedDrafts)) {
-      current.drafts[id] = current.drafts[id] ? {...current.drafts[id], read:current.drafts[id].read || draft.read} : draft;
+      current.drafts[id] = current.drafts[id] ? {...current.drafts[id], hint:current.drafts[id].hint||draft.hint, read:current.drafts[id].read || draft.read} : draft;
     }
   });
 }

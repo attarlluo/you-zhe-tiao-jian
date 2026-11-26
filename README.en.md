@@ -14,6 +14,12 @@ A self-study workbench that turns a moment of curiosity into something you can t
 - **Explore the resource map.** Browse 30 public resources across four intersecting topic areas. Resources with more than one topic drift between their matching areas. Draw one at random, filter by topic, or switch to the full list.
 - **Plan and review.** Work through 12 topics and 24 original exercises. Numerical exercises support automatic checks, and open questions include a self-check rubric. Record where you got stuck and return for a scheduled review.
 
+Expand “What does this demo cover, and what is still missing?” on the workbench overview to see each topic’s goals, prepared exercises and remaining gaps. Introductory practice is not complete curriculum coverage or evidence of mastery.
+
+Numerical feedback distinguishes matching, incorrect, blank and invalid fields. Fractions are supported; use `?` to skip a field. Counts and classes are checked exactly, with separate tolerances for rounded decimals. Matching numbers still need a reasoning check. Open-ended self-assessment does not count as independently verified evidence.
+
+Three follow-up exercises are reserved by default. They become eligible for the plan at least 20 hours after an attempt at the related introductory exercise, replacing a due question of the same skill where possible. You can also reveal them manually in Practice. The sequence is a suggested route; it does not infer weaknesses without attempts.
+
 ## Run locally
 
 1. On Windows, double-click [Start-Learning.cmd](Start-Learning.cmd). On other systems, run the command below from the project directory. Substitute `python3` if that is the command your system uses.
@@ -29,7 +35,15 @@ Use **English / 简体中文** at the top of any page to switch the language of 
 
 Answers, drafts and review history stay in the current browser. Export a JSON backup from the workbench's resources and records page before clearing site data or switching devices. Importing a backup merges its attempt history. You can also use it to bring your progress from the local site to the online version.
 
+Hint and solution exposure persists across saves and retries. Clearing the input does not make an assisted question independent. Reading a solution later does not rewrite a previously saved attempt. Different questions and delayed reviews provide additional evidence, rather than proving mastery of a whole topic.
+
+The 2026-11-27 update preserves old answers, recorded grades and IDs, and still accepts older JSON backups. Current independent-result counts conservatively exclude recorded assistance or old answers that fail the current field rules. Historical scores are not silently rewritten. Reading or assistance outside the recorded interface cannot be inferred.
+
 Select the home page’s “Try one exercise” button to jump to the next task, with due reviews first. For a short demo, take the three-minute tour and compare the single-layer and two-layer models. After you submit an exercise, the review page shows when to come back.
+
+## Verification
+
+Run `node --test tests/learning.test.mjs`. The 28 checks include independent calculations for all 21 numerical exercises, field tolerances, fractions and blanks, assistance evidence, reserved follow-ups, budgets and old/new backup merges. Separate checks use fresh browser contexts for both languages, answer recovery, error notes, imports and exports, labs, resource balls and mobile layouts. No personal learning records were used. These checks verify software behavior and the listed numerical targets, rather than learning outcomes or a complete curriculum.
 
 ## Copyright and credits
 

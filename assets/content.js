@@ -187,3 +187,40 @@ export const units = [
     '窗口起点是 (输出行×步幅−填充, 输出列×步幅−填充)。',
     '起点=(3,1)，窗口沿两维覆盖 3 格，终点=(5,3)。', [3,1,5,3])
 ];
+
+// Counts and discrete classes are exact; only the explicitly rounded fields are relaxed.
+const answerFields={
+  'split-count':[t('训练样本数','Training count'),t('验证样本数','Validation count'),t('测试样本数','Test count')],
+  'scale-forward':['z',t('原值','Original value')],
+  'scale-variant':['z_A','z_B','z_B − z_A'],
+  'gradient-step':['w',t('新损失','Updated loss')],
+  'gradient-overshoot':['w',t('新损失','Updated loss')],
+  mse:[t('平均残差','Mean residual'),'MSE'],
+  'mean-baseline':[t('最优常数','Best constant'),'MSE'],
+  'logit-threshold':['p',t('预测类别','Predicted class')],
+  'log-loss':['loss(y=1)','loss(y=0)'],
+  'gini-split':[t('父节点 Gini','Parent Gini'),t('加权下降量','Weighted decrease')],
+  'tree-vote':[t('最终类别','Final class'),t('正类票占比','Positive vote share')],
+  confusion:['Precision','Recall','Accuracy'],
+  'threshold-tradeoff':['FP','FN','Recall'],
+  'train-val-gap':[t('A 的差距','Gap A'),t('B 的差距','Gap B')],
+  'kmeans-step':[t('较小中心','Smaller center'),t('较大中心','Larger center')],
+  'kmeans-loss':[t('旧中心损失','Old-center loss'),t('新中心损失','New-center loss')],
+  'pca-variance':[t('第一项比例','First component ratio'),t('前两项比例','First two ratio')],
+  'pca-project':[t('投影坐标','Projection coordinate'),t('重建 x','Reconstructed x'),t('重建 y','Reconstructed y')],
+  'xor-forward':['h₁(1,1)','h₂(1,1)','XOR(1,1)','XOR(1,0)'],
+  'conv-shape':['H','W','C',t('参数量','Parameter count')],
+  'conv-window':[t('起始行','Start row'),t('起始列','Start column'),t('结束行','End row'),t('结束列','End column')]
+};
+const exactOnly=new Set(['split-count','scale-forward','scale-variant','gradient-step','gradient-overshoot','mse','mean-baseline','gini-split','tree-vote','confusion','threshold-tradeoff','train-val-gap','kmeans-step','kmeans-loss','xor-forward','conv-shape','conv-window','logit-threshold']);
+const reserve=new Set(['scale-variant','gradient-overshoot','kmeans-loss']);
+for(const unit of units){
+  unit.kind='generated';
+  unit.review_variant=reserve.has(unit.id);
+  if(unit.review_variant)unit.variant_after=units.filter(other=>other.id!==unit.id&&other.skill_id===unit.skill_id&&!reserve.has(other.id)).map(other=>other.id);
+  if(unit.check.type==='numeric'){
+    unit.check.fields=answerFields[unit.id];
+    unit.check.tolerances=unit.check.values.map(()=>exactOnly.has(unit.id)?1e-8:.00051);
+    if(unit.id==='pca-project')unit.check.tolerances=[.00051,1e-8,1e-8];
+  }
+}

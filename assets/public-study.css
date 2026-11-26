@@ -1,4 +1,18 @@
 .workbench { --index-width:210px; }
+.coverage-scroll { overflow-x:auto; margin-top:1rem; }
+.coverage-scroll table { width:100%; border-collapse:collapse; min-width:640px; }
+.coverage-scroll th,.coverage-scroll td { text-align:left; vertical-align:top; border-bottom:1px solid var(--line); padding:1rem .8rem; }
+.coverage-scroll th { width:30%; }
+.coverage-scroll td { width:35%; }
+.coverage-scroll .source-link { display:flex; margin-top:.6rem; }
+.answer-guide { margin:1rem 0; padding:1rem; background:var(--moss); }
+.answer-guide ol { margin:.5rem 0; padding-left:1.4rem; }
+.answer-breakdown { list-style:none; padding:0; margin:.8rem 0; }
+.answer-breakdown li { display:flex; gap:.5rem; align-items:baseline; flex-wrap:wrap; padding:.5rem 0; border-top:1px solid var(--line); }
+.answer-breakdown li span { flex:1; min-width:110px; }
+.answer-breakdown li small { font-size:.9rem; }
+.answer-wrong,.answer-invalid,.answer-blank { color:var(--error); }
+.topic-coverage { margin:1rem 0; }
 .workbench[data-theme="warm"],[data-theme="warm"] .workbench {
   --paper:#f8eee5; --surface:#fffaf2; --ink:#392f28; --muted:#6d5749;
   --line:#e4d1c1; --fern:#7b5345; --moss:#eddbcc;
